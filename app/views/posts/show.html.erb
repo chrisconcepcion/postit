@@ -1,0 +1,14 @@
+<div class="well">
+<h3>Viewing: </h3> <h4><%= @post.title %></h4>
+<p><%= link_to @post.url, @post.url %></p>
+<p><%= @post.description %></p>
+</div>
+
+<div class="well">
+<h5>Comments:</h5>
+<ul>
+	<% @post.comments.each do |comment| %>
+	<%= comment.comment %>
+	<% end %>
+</ul>
+</div>
