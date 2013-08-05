@@ -1,29 +1,51 @@
 <div class="well">
-<h3>Viewing: </h3> <h4><%= @post.title %></h4>
-<p><%= link_to @post.url, @post.url %></p>
-<p><%= @post.description %></p>
-</div>
-
-<div class="well">
-<h5>Comments:</h5>
-<ul>
-	<% @post.comments.each do |comment| %>
-	<div class="well">
-	<%= comment.comment %>
-	</div>
-	<% end %>
-</ul>
-
-
-<%= form_for [@post, @comment] do |f| %>
-	<%= f.label :comment %>
-	<%= f.text_field :comment %>
-	<% f.label :post_id %>
-	</br>
-	<%= f.submit %>
+<% @post.categories.each do |cat| %>
+<%=	link_to cat.name, category_path(cat.id), class: "btn btn-default btn-mini" %>
 <% end %>
 
+<% if logged_in? && current_user.id == @post.user_id  %>
+	<div class="pull-right">
+		<%= link_to "Edit", edit_post_path, class: 'btn btn-small' %>
+	</div>
+<% end %>
+
+<%= render 'shared/header', header: "Viewing: " + @post.title %>
+<p><%= link_to @post.url, @post.url %></p>
+<p><%= @post.description %></p>
+<div class="pull-left">
+	<h6><i>Posted by: <%= link_to @post.user.username, user_path(@post.user_id) %></i></h6>
+</div>
+</br>
+</br>
+
+<div class="well">
+	<h5>Comments:</h5>
+			<% @post.comments.each do |comment| %>
+				<ul>	
+					<div class="well">
+						<%= comment.comment %>
+					</br>
+						<div class="pull-left">
+							<h6><i>Posted by: <%= link_to comment.user.username, user_path(comment.user_id) %></i></h6>
+						</div>
+</br>
+</br>
+					</div>
+				</ul>	
+			<% end %>
+				
+
+	<% if logged_in? %>
+		<%= form_for [@post, @comment] do |f| %>
+			<%= f.label "Post a Comment:" %>
+			<%= f.text_field :comment %>
+			<% f.label :post_id %>
+			</br>
+			<%= f.submit %>
+		<% end %>
+	<% end %>
+</div>
 
 
-<%= link_to "Home", root_path %> |
-<%= link_to "Edit", edit_post_path %>
+<%= link_to "Home", root_path, class: 'btn btn-small' %> 
+

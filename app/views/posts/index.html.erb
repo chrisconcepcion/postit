@@ -1,9 +1,4 @@
-<h3>Welcome!</h3>
-
-<%= link_to 'New Post', new_post_path %>
-<p></p>
-<p></p>
-
+<%= render 'shared/header', header: "Welcome!" %>
 
 <ul>
 <% @post.each do |post| %>
