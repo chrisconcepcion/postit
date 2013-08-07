@@ -32,25 +32,30 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
       if @post.update(post_params)
-        redirect_to @post, notice: 'Post was successfully updated.' 
+        redirect_to post_path(@post), notice: 'Post was successfully updated.' 
       else
         render :edit
       end
   end
 
   def vote
-    answer = true
-    @post.votes.each do |votes|
-      if votes.user_id == current_user.id
-        answer = false
-        break
+    if current_user.already_voted_on?(@post)
+      respond_to do |format|
+        format.html do
+          redirect_to :back, notice: "You can only vote once per post."
+        end
       end
-    end
-    if answer == false
-      redirect_to posts_path, notice: "You can only vote once per post."
+
     else
+      
+
       Vote.create(voteable: @post, user_id: current_user.id, vote: params[:vote])
-      redirect_to posts_path, notice: 'Vote was successful'
+      respond_to do |format|
+        format.html do
+          redirect_to :back, notice: 'Your vote was successful'
+        end
+        format.js
+      end
     end
   end
 
