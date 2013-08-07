@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_action :require_user, only: [:new, :create]
+	before_action :require_user, only: [:edit, :update]
 	before_action :set_user, only: [:edit, :show, :update]
 	before_action :require_creator, only: [:edit]
 	

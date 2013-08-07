@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update]
-  before_action :require_user, only: [:edit, :create, :update, :new]
+  before_action :set_post, only: [:show, :edit, :update, :vote]
+  before_action :require_user, only: [:edit, :create, :update, :new, :vote]
   before_action :require_creator, only: [:edit, :update]
 
   def index
@@ -12,7 +12,6 @@ class PostsController < ApplicationController
   end
 
   def edit
-    binding.pry
   end
 
   def new
@@ -39,7 +38,24 @@ class PostsController < ApplicationController
       end
   end
 
+  def vote
+    answer = true
+    @post.votes.each do |votes|
+      if votes.user_id == current_user.id
+        answer = false
+        break
+      end
+    end
+    if answer == false
+      redirect_to posts_path, notice: "You can only vote once per post."
+    else
+      Vote.create(voteable: @post, user_id: current_user.id, vote: params[:vote])
+      redirect_to posts_path, notice: 'Vote was successful'
+    end
+  end
+
 private
+
 
   def post_params
     params.require(:post).permit!

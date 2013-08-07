@@ -1,10 +1,19 @@
 <% show_post ||= false %>
 
 <div class="row" >
-  <div class='span0 well text-center comment_votes'>
-
+  <div class='span0 well text-center'>
+    <%= link_to vote_post_comment_path(comment.id, vote: true), method: post do %>
+    <i class = 'icon-arrow-up'></i>
+    <% end %>
+  </br>
+  <%= "#{comment.total_votes} votes" %>
+  </br>
+    <%= link_to vote_post_comment_path(comment, vote: false), method: post do %>
+    <i class = 'icon-arrow-down'></i>
+    <% end %>
+  </br>
   </div>
-  <div class='well span8'>
+  <div class='well span6'>
     <em>"<%= comment.comment %>"</em>
     <% if show_post %>
       on <%= link_to comment.post.title, post_path(comment.post) %>

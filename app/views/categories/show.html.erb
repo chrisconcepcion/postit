@@ -1,8 +1,8 @@
-<%= render 'shared/header', header: "Viewing Category: " + @category.name %>
+<%= render 'shared/header', header: "Viewing Category: " + @category.name %> 
 
 <% @category.posts.each do |post| %>
 	<div class="well">
-		<%=	link_to post.title, post_path(post.id), class: "btn btn-default btn-mini" %>
+		<%=	link_to post.title, post_path(post.id) %>
 	</div>
 <% end %>
 

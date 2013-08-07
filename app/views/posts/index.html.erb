@@ -2,8 +2,6 @@
 
 <ul>
 <% @post.each do |post| %>
-<div class="well">
-	<%= link_to post.title, post %>
-	</div>
+	<%= render 'post', post: post %>
 <% end %>
 </ul>

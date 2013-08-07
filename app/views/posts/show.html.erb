@@ -1,36 +1,51 @@
-<div class="well">
-<% @post.categories.each do |cat| %>
-<%=	link_to cat.name, category_path(cat.id), class: "btn btn-default btn-mini" %>
-<% end %>
+<div class="row">
+  <div class = 'span1 well text-center'>
+    <%= link_to vote_post_path(@post), method: @post do %>
+    <i class = 'icon-arrow-up'></i>
+    <% end %>
+  </br>
+  <%= "#{@post.total_votes} votes" %>
+  </br>
+    <%= link_to user_path(@post.user_id), method: @post do %>
+    <i class = 'icon-arrow-down'></i>
+    <% end %>
+  </br>
+  </div>
 
-<% if logged_in? && current_user.id == @post.user_id  %>
-	<div class="pull-right">
-		<%= link_to "Edit", edit_post_path, class: 'btn btn-small' %>
+	<div class = 'span8 well '>
+		<% if logged_in? && current_user.id == @post.user_id  %>
+			<div class="pull-right">
+				<%= link_to "Edit", edit_post_path, class: 'btn btn-small' %>
+			</div>
+		<% end %>
+				<div class='text-left'>
+			<% @post.categories.each do |category| %>
+				<%= render 'categories/category', category: category%>
+			<% end %>
+		</div>
+		<h4><%= link_to @post.title, @post.url %></h4>
+		
+		<p><%= @post.description %></p>
+		<div class="pull-left">
+			<h6>Categories:</h6>
+		</div>
+	</br>
+	</br>
+
+
+		<div class="pull-left">
+			<small><span class="quiet">by <%= link_to @post.user.username, user_path(@post.user_id) %> at 12:00:00</span></small>
+		</div>
+	</br>
+		<hr>
+		<div class="pull-left">
+		<h5>Comments:</h5>
 	</div>
-<% end %>
-
-<%= render 'shared/header', header: "Viewing: " + @post.title %>
-<p><%= link_to @post.url, @post.url %></p>
-<p><%= @post.description %></p>
-<div class="pull-left">
-	<h6><i>Posted by: <%= link_to @post.user.username, user_path(@post.user_id) %></i></h6>
-</div>
 </br>
 </br>
-
-<div class="well">
-	<h5>Comments:</h5>
 			<% @post.comments.each do |comment| %>
 				<ul>	
-					<div class="well">
-						<%= comment.comment %>
-					</br>
-						<div class="pull-left">
-							<h6><i>Posted by: <%= link_to comment.user.username, user_path(comment.user_id) %></i></h6>
-						</div>
-</br>
-</br>
-					</div>
+					<%=render 'comments/comment', comment: comment %>
 				</ul>	
 			<% end %>
 				
@@ -45,7 +60,8 @@
 		<% end %>
 	<% end %>
 </div>
+	
+</div>
 
 
-<%= link_to "Home", root_path, class: 'btn btn-small' %> 
 
