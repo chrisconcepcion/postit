@@ -1,12 +1,11 @@
 <%= render 'shared/header', header: "Viewing #{@user.username}'s Profile:" %>
 
-<% if logged_in? && current_user.id == @user.id  %>
-	<div class="pull-right">
-		<%= link_to "Edit", edit_user_path, class: 'btn btn-small' %>
-	</div>
-<% end %>
-
 <div class= 'well'>
+  <% if logged_in? && current_user.id == @user.id  %>
+    <div class="pull-right">
+  <%= link_to "Edit", edit_user_path, class: 'btn btn-small' %>
+  </div>
+<% end %>
 	<p>Username: <%= @user.username %> </p>
 
 	<p>Email: <%= @user.email %> </p>

@@ -1,15 +1,19 @@
 <div class="row">
   <div class = 'span1 well text-center'>
-    <%= link_to vote_post_path(post, vote: true), method: 'post', remote: true do %>
-    <i class = 'icon-arrow-up'></i>
-    <% end %>
+      <% if logged_in? %>
+        <%= link_to vote_post_path(post, vote: true), method: 'post', remote: true do %>
+          <i class = 'icon-arrow-up'></i>
+        <% end %>
+      <% end %>
   </br>
   <span id= "post_<%= post.id %>_votes">
     <%= "#{post.total_votes} votes" %>
   </span>
   </br>
-    <%= link_to vote_post_path(post, vote: false), method: 'post', remote: true do %>
-    <i class = 'icon-arrow-down'></i>
+    <% if logged_in? %>
+      <%= link_to vote_post_path(post, vote: false), method: 'post', remote: true do %>
+        <i class = 'icon-arrow-down'></i>
+      <% end %>
     <% end %>
   </br>
   </div>
@@ -23,7 +27,7 @@
     <% post.categories.each do |category| %>
       <%= render 'categories/category', category: category %>
     <% end %>
-    <h4><%= link_to post.title, post.url %></h4>
+    <h4><%= link_to post.title, fix_url(post.url) %></h4>
     
     <p><%= post.description %></p>
     <small><p><span class="quiet">posted by</span> <%= link_to post.user.username, user_path(post.user_id) %></p></small>

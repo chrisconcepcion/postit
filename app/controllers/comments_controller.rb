@@ -1,28 +1,30 @@
 class CommentsController < ApplicationController
-	before_action :require_user, only: [:new, :create, :vote]
-	  def new
-	  	@comment = Comment.new
-	  	@comment[:post_id] = post_id
-	  end
+	before_action :require_user, only: [:create, :vote]
 
 	  def create
+	  	
+	  	@post = Post.find_by_slug(params[:post_id])
 		@comment = Comment.new(comment_params)
-		@comment.post_id = params[:post_id]
+		@comment.post_id = @post.id
 		@comment[:user_id] = current_user_id
 	  	if @comment.save(comment_params)
-	  		redirect_to post_path(@comment.post_id), notice: "Comment was posted successfully!"
+	  		redirect_to post_path(@post), notice: "Comment was posted successfully!"
 	  	else
 	  		render post_comments
 	  	end
 	  end
 
 	  def vote
+	  	@post = Post.find_by_slug(params[:post_id])
 	   	@comment = Comment.find(params[:id])
     	if current_user.already_voted_on?(@comment)
       		redirect_to post_path(@comment.post_id), notice: "You can only vote once per comment."
     	else
       		Vote.create(voteable: @comment, user_id: current_user.id, vote: params[:vote])
-      		redirect_to post_path(@comment.post_id), notice: 'Vote was successful'
+      		respond_to do |format|
+        		format.html
+        		format.js
+        	end
     	end
   	   end
 

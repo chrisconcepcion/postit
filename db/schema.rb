@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130802185336) do
+ActiveRecord::Schema.define(version: 20130809193342) do
 
   create_table "categories", force: true do |t|
     t.string "name"
+    t.string "slug"
   end
 
   create_table "comments", force: true do |t|
@@ -33,6 +34,7 @@ ActiveRecord::Schema.define(version: 20130802185336) do
     t.string  "title"
     t.text    "description"
     t.integer "user_id"
+    t.string  "slug"
   end
 
   create_table "users", force: true do |t|
@@ -40,6 +42,7 @@ ActiveRecord::Schema.define(version: 20130802185336) do
     t.string "password_digest"
     t.string "email"
     t.string "about"
+    t.string "slug"
   end
 
   create_table "votes", force: true do |t|

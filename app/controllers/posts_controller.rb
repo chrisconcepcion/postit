@@ -30,7 +30,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
       if @post.update(post_params)
         redirect_to post_path(@post), notice: 'Post was successfully updated.' 
       else
@@ -38,12 +37,12 @@ class PostsController < ApplicationController
       end
   end
 
+
   def vote
     if current_user.already_voted_on?(@post)
       respond_to do |format|
-        format.html do
-          redirect_to :back, notice: "You can only vote once per post."
-        end
+        format.html 
+        format.js 
       end
 
     else
@@ -51,9 +50,7 @@ class PostsController < ApplicationController
 
       Vote.create(voteable: @post, user_id: current_user.id, vote: params[:vote])
       respond_to do |format|
-        format.html do
-          redirect_to :back, notice: 'Your vote was successful'
-        end
+        format.html
         format.js
       end
     end
@@ -67,7 +64,7 @@ private
   end
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by_slug(params[:id])
   end
 
   def require_creator
