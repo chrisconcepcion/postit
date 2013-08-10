@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :vote]
+  before_action :set_post, only: [:show, :edit, :update, :vote, :destroy]
   before_action :require_user, only: [:edit, :create, :update, :new, :vote]
   before_action :require_creator, only: [:edit, :update]
+  before_action :require_admin, only: [:destroy]
 
   def index
   	@post = Post.all
@@ -37,6 +38,11 @@ class PostsController < ApplicationController
       end
   end
 
+  def destroy
+    @post.destroy
+    redirect_to posts_path
+
+  end
 
   def vote
     if current_user.already_voted_on?(@post)
@@ -68,7 +74,7 @@ private
   end
 
   def require_creator
-    access_denied unless logged_in? && current_user.id == @post.user_id
+    access_denied unless logged_in? && ((current_user.id == @post.user_id) || current_user.admin?)
   end
 
 

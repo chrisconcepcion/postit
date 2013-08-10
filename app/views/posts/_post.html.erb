@@ -19,9 +19,14 @@
   </div>
 
   <div class = 'span8 well '>
-        <% if logged_in? && current_user.id == post.user_id  %>
+        <% if ((logged_in? && current_user.id == post.user_id) || current_user.admin?) %>
       <div class="pull-right">
         <%= link_to "Edit", edit_post_path(post), class: 'btn btn-small' %>
+        <% if current_user.admin? %>
+          
+          <%= button_to 'Delete', post, :method => :delete, :confirm => 'Are you sure?' %>
+        <% end %>
+
       </div>
       <% end %>
     <% post.categories.each do |category| %>
