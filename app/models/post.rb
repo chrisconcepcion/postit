@@ -10,6 +10,7 @@ class Post < ActiveRecord::Base
 	validates :url, presence: true
 	validates :description, presence: true
 	after_validation :generate_slug
+
 	 
 	  def generate_slug
 	    if self.errors.empty?
