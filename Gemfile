@@ -21,7 +21,7 @@ end
 group :development do
   gem 'quiet_assets'
   gem 'pry'
-  gem 'pg'
+  gem 'sqlite3'
 end
 
 group :production do
