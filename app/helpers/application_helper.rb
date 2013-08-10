@@ -6,4 +6,8 @@ module ApplicationHelper
 	def display_datetime(dt)
 		dt.strftime("%m/%d/%Y 1:%M%P %Z")
 	end
+
+	def subtract(a,b)
+		a - b
+	end
 end
