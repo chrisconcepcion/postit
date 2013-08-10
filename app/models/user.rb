@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
 	validates :password, presence: true, length: {minimum: 5}
 	after_validation :generate_slug
 
+	def admin?
+		self.role == 'admin'
+	end
+
 	def already_voted_on?(obj)
 		self.votes.where(voteable: obj).size > 0
 	end

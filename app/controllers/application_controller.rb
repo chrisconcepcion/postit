@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :current_user, :login_name
 
+
+  def require_admin
+    access_denied unless current_user && current_user.admin?
+  end  
+
   def login_name
   	User.find(session[:user_id]).username
   end

@@ -19,12 +19,14 @@
       <% end %>
      <% if logged_in? %>
       <li class='divider'></li>
+      <% if logged_in? && current_user.admin? %>
       <li>
         <%= link_to(new_category_path) do %>
           <i class="icon-plus"></i>
           New Category
         <% end %>
       </li>
+      <% end %>
     <% end %>
   </ul>
 </div>
