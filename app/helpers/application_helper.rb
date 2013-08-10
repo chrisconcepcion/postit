@@ -7,7 +7,4 @@ module ApplicationHelper
 		dt.strftime("%m/%d/%Y 1:%M%P %Z")
 	end
 
-	def subtract(a,b)
-		a.to_i - b.to_i
-	end
 end

@@ -35,7 +35,7 @@
     <h4><%= link_to post.title, fix_url(post.url) %></h4>
     
     <p><%= post.description %></p>
-        <% if subtract(post.created_at, post.updated_at) < 0 %>
+        <% if post.created_at != post.updated_at %>
     <small><p><span class="quiet">by</span> <%= link_to post.user.username, user_path(post.user_id) %> at <%= display_datetime(post.created_at) %><i>(Last edit by <%= login_name %> at <%= post.updated_at%>)</i></p></small>
     <small>
     <% else %>
