@@ -21,7 +21,7 @@
   <div class = 'span8 well '>
         <% if logged_in? && current_user.id == post.user_id  %>
       <div class="pull-right">
-        <%= link_to "Edit", edit_post_path(post.id), class: 'btn btn-small' %>
+        <%= link_to "Edit", edit_post_path(post), class: 'btn btn-small' %>
       </div>
       <% end %>
     <% post.categories.each do |category| %>
@@ -30,8 +30,13 @@
     <h4><%= link_to post.title, fix_url(post.url) %></h4>
     
     <p><%= post.description %></p>
-    <small><p><span class="quiet">posted by</span> <%= link_to post.user.username, user_path(post.user_id) %></p></small>
+        <% if (post.created_at - post.updated_at) < 0 %>
+    <small><p><span class="quiet">by</span> <%= link_to @post.user.username, user_path(post.user_id) %> at <%= display_datetime(post.created_at) %><i>(Last edit by <%= login_name %> at <%= post.updated_at%>)</i></p></small>
     <small>
+    <% else %>
+     <small><p><span class="quiet">by</span> <%= link_to post.user.username, user_path(post.user_id) %> at <%= display_datetime(post.created_at) %></p></small>
+    <small>
+    <% end %>
       <span>
         <%= link_to("#{post.comments.size} comments", post_path(post)) %>
       </span>

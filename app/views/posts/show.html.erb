@@ -18,37 +18,31 @@
   </br>
   </div>
 
-	<div class = 'span8 well '>
-		<% if logged_in? && current_user.id == @post.user_id  %>
-			<div class="pull-right">
-				<%= link_to "Edit", edit_post_path, class: 'btn btn-small' %>
-			</div>
-		<% end %>
-				<div class='text-left'>
-			<% @post.categories.each do |category| %>
-				<%= render 'categories/category', category: category%>
-			<% end %>
-		</div>
-		<h4><%= link_to @post.title, @post.url %></h4>
-		
-		<p><%= @post.description %></p>
-		<div class="pull-left">
-			<h6>Categories:</h6>
-		</div>
-	</br>
-	</br>
-
-
-		<div class="pull-left">
-			<small><span class="quiet">by <%= link_to @post.user.username, user_path(@post.user_id) %> at 12:00:00</span></small>
-		</div>
-	</br>
-		<hr>
-		<div class="pull-left">
+  <div class = 'span8 well '>
+    <% if logged_in? && current_user.id == @post.user_id  %>
+    	<div class="pull-right">
+        	<%= link_to "Edit", edit_post_path(@post), class: 'btn btn-small' %>
+      	</div>
+    <% end %>
+    <% @post.categories.each do |category| %>
+      <%= render 'categories/category', category: category %>
+    <% end %>
+    <h4><%= link_to @post.title, fix_url(@post.url) %></h4>
+    
+    <p><%= @post.description %></p>
+    <% if (@post.created_at - @post.updated_at) < 0 %>
+    <small><p><span class="quiet">by</span> <%= link_to @post.user.username, user_path(@post.user_id) %> at <%= display_datetime(@post.created_at) %><i>(Last edit by <%= login_name %> at <%= @post.updated_at%>)</i></p></small>
+    <small>
+    <% else %>
+     <small><p><span class="quiet">by</span> <%= link_to @post.user.username, user_path(@post.user_id) %> at <%= display_datetime(@post.created_at) %></p></small>
+    <small>
+    <% end %>
+	<hr>
+	<div class="pull-left">
 		<h5>Comments:</h5>
 	</div>
-</br>
-</br>
+	</br>
+	</br>
 			<% @post.comments.each do |comment| %>
 				<ul>	
 					<%=render 'comments/comment', comment: comment %>

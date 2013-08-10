@@ -11,17 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130810012412) do
+ActiveRecord::Schema.define(version: 20130810154707) do
 
   create_table "categories", force: true do |t|
-    t.string "name"
-    t.string "slug"
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "comments", force: true do |t|
-    t.text    "comment"
-    t.integer "user_id"
-    t.integer "post_id"
+    t.text     "comment"
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "post_categories", force: true do |t|
@@ -30,20 +34,24 @@ ActiveRecord::Schema.define(version: 20130810012412) do
   end
 
   create_table "posts", force: true do |t|
-    t.string  "url"
-    t.string  "title"
-    t.text    "description"
-    t.integer "user_id"
-    t.string  "slug"
+    t.string   "url"
+    t.string   "title"
+    t.text     "description"
+    t.integer  "user_id"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
-    t.string "username"
-    t.string "password_digest"
-    t.string "email"
-    t.string "about"
-    t.string "slug"
-    t.string "role"
+    t.string   "username"
+    t.string   "password_digest"
+    t.string   "email"
+    t.string   "about"
+    t.string   "slug"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "votes", force: true do |t|
