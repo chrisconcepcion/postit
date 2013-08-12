@@ -6,17 +6,15 @@ class ApplicationController < ActionController::Base
   helper_method :logged_in?, :current_user, :login_name
 
 
-  def require_admin # helps controller
+  def require_admin 
     access_denied unless current_user && current_user.admin?
   end  
 
-  def login_name #helps view
+  def login_name 
   	User.find(session[:user_id]).username
   end
 
-
-
-  def current_user #helps controller and view
+  def current_user 
   	@current ||= User.find(session[:user_id]) if session[:user_id]
 
   end
@@ -27,18 +25,18 @@ class ApplicationController < ActionController::Base
   	end
   end
 
-  def logged_in? #helps controllers
+  def logged_in? 
   	!!current_user
   end
 
-  def require_user #helps controller
+  def require_user 
   	unless logged_in?
   		flash[:error] = "You must be logged in for this request"
   		redirect_to root_path
   	end
   end
 
-  def access_denied # helps controller
+  def access_denied 
   	flash[:error] = "Access denied"
   	redirect_to root_path
   end
