@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
 			if user.two_factor_auth?
 				session[:two_factor] = true
 				user.generate_pin!
+				user.send_pin_to_twilio
 				redirect_to pin_path
 			else
 				session[:user_id] = user.id 
@@ -35,7 +36,6 @@ class SessionsController < ApplicationController
 		 user = User.find_by pin: params[:pin]
 		 	if user
 		 		user.remove_pin!
-		 		user.send_pin_to_twilio
 		 		session[:two_factor] = nil
 				session[:user_id] = user.id
 				redirect_to root_path, notice: "You have successfully logged in!"
