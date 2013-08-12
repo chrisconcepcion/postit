@@ -9,8 +9,14 @@ class SessionsController < ApplicationController
 
 		user = User.find_by(username:(params[:username]))
 		if user && user.authenticate(params[:password])
-			session[:user_id] = user.id 
-			redirect_to root_path, notice: "You have successfully logged in!"
+			if user.two_factor_auth?
+				session[:two_factor] = true
+				user.generate_pin!
+				redirect_to pin_path
+			else
+				session[:user_id] = user.id 
+				redirect_to root_path, notice: "You have successfully logged in!"
+			end
 		else
 			flash[:error] =  "Unable to find username and password combination"
 			redirect_to login_path
@@ -21,6 +27,23 @@ class SessionsController < ApplicationController
 	def destroy
 		session[:user_id] = nil
 		redirect_to login_path
+	end
+
+	def pin
+		access_denied if session[:two_factor].nil?
+		if request.post?
+		 user = User.find_by pin: params[:pin]
+		 	if user
+		 		user.remove_pin!
+		 		user.send_pin_to_twilio
+		 		session[:two_factor] = nil
+				session[:user_id] = user.id
+				redirect_to root_path, notice: "You have successfully logged in!"
+			else
+				flash[:error] =  "Pin does not match."
+				redirect_to pin_path
+			end
+		end
 	end
 
 private

@@ -1,0 +1,11 @@
+<%= render 'shared/header', header: 'Enter Pin to Log In' %>
+
+<div class = 'well'>
+<%= form_tag '/pin' do %>
+<div class='control-group'>
+	<%= label_tag :pin, "Pin Number" %>
+	<%= text_field_tag :pin, params[:pin] %>
+</div>
+	<%= submit_tag "Submit Pin" %>
+<% end %>
+</div>

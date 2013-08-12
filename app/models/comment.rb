@@ -1,11 +1,10 @@
 class Comment < ActiveRecord::Base
+	include Voteable_Ceconcepcion
+
 	belongs_to :user
 	belongs_to :post
-	has_many :votes, as: :voteable
+	
 
 	validates :comment, presence: true
 
-	def total_votes
-		self.votes.where(vote: true).size - self.votes.where(vote: false).size
-	end
 end
