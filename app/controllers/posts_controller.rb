@@ -46,6 +46,7 @@ class PostsController < ApplicationController
 
   def vote
     if current_user.already_voted_on?(@post)
+      flash[:message] = "You can only vote once per post!"
       respond_to do |format|
         format.html 
         format.js 

@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 	end
 
 
+
 	def generate_pin!
 		self.update_column(:pin, rand(10 ** 6)) 
 	end
@@ -23,6 +24,7 @@ class User < ActiveRecord::Base
 	def remove_pin!
 		self.update_column(:pin, nil)
 	end
+
 
 	def send_pin_to_twilio
 		account_sid = 'ACcf2d413f36b0b86f5c0245c357820c56'
@@ -45,7 +47,5 @@ class User < ActiveRecord::Base
 	end
 
 
-	  def to_param
-	    self.slug
-	  end
+	
 end

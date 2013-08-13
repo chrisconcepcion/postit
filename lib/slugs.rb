@@ -27,4 +27,8 @@ module Slugs
         self.slug = final_slug
       end
     end
+
+      def to_param
+      self.slug
+    end
 end
