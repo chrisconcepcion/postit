@@ -18,7 +18,12 @@ class CommentsController < ApplicationController
 	  	@post = Post.find_by_slug(params[:post_id])
 	   	@comment = Comment.find(params[:id])
     	if current_user.already_voted_on?(@comment)
-      		redirect_to post_path(@comment.post_id), notice: "You can only vote once per comment."
+      	respond_to do |format|
+        	format.html 
+      	 	format.js do
+          		render js: "alert('You can only vote on a post once!')"
+          	end
+        end
     	else
       		Vote.create(voteable: @comment, user_id: current_user.id, vote: params[:vote])
       		respond_to do |format|

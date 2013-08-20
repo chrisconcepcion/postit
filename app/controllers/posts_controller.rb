@@ -32,6 +32,7 @@ class PostsController < ApplicationController
 
   def update
       if @post.update(post_params)
+        @post.update_column(:updated_by, current_user.username) 
         redirect_to post_path(@post), notice: 'Post was successfully updated.' 
       else
         render :edit
@@ -46,10 +47,11 @@ class PostsController < ApplicationController
 
   def vote
     if current_user.already_voted_on?(@post)
-      flash[:message] = "You can only vote once per post!"
       respond_to do |format|
         format.html 
-        format.js 
+        format.js do
+          render js: "alert('You can only vote on a post once!')"
+        end
       end
 
     else

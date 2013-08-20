@@ -1,8 +1,8 @@
 module Slugs
-  def generate_slug
+  def generate_slug(slugged)
       if self.errors.empty?
   #strip the string
-        slug = self.username.dup
+        slug = slugged.dup
 
   #blow away apostrophes
         slug.gsub! /['`]/,""

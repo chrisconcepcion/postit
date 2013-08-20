@@ -9,13 +9,11 @@ class User < ActiveRecord::Base
 	validates :username, presence: true, uniqueness: true 
 	validates :password, presence: true, length: {minimum: 5}
 	validates :password, presence: true, length: {minimum: 5}
-	after_validation :generate_slug
+	after_validation { |c| c.generate_slug self.username }
 
 	def two_factor_auth?
 		self.phone.present?
 	end
-
-
 
 	def generate_pin!
 		self.update_column(:pin, rand(10 ** 6)) 

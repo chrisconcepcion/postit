@@ -1,2 +1,2 @@
-$("#comment_<%= @comment.id %>_votes").html("<%= @comment.total_votes %> votes");
+$("#comment_<%= @comment.id %>_votes").html("<%= pluralize(@comment.total_votes, 'vote') %>");
 

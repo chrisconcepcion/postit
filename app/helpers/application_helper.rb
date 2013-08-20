@@ -7,4 +7,7 @@ module ApplicationHelper
 		dt.strftime("%m/%d/%Y 1:%M%P %Z")
 	end
 
+	def user_by_name(user)
+		User.find_by username: user
+	end
 end
