@@ -9,7 +9,7 @@
      <% end %> 
   </br>
   <span id = "comment_<%= comment.id %>_votes">
-    <%= "#{comment.total_votes} votes" %>
+    <%= pluralize(comment.total_votes, 'vote') %>
   </span>
   </br>
     <% if logged_in? %>

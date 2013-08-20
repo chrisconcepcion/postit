@@ -1,1 +1,2 @@
-$("#post_<%= @post.id %>_votes").html("<%= @post.total_votes %> votes");
+$("#post_<%= @post.id %>_votes").html("<%= pluralize(@post.total_votes, 'vote') %>");
+
