@@ -25,7 +25,7 @@
       on <%= link_to comment.post.title, post_path(comment.post) %>
     <% end %>
     <br/>
-    <span class="quiet">by</span> <%= link_to comment.user.username, user_path(comment.user.username) %>  at <%= display_datetime(comment.created_at) %>
+    <span class="quiet">by</span> <%= link_to comment.user.username, user_path(comment.user.id) %>  at <%= display_datetime(comment.created_at) %>
 
   </div>
 </div>

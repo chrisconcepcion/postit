@@ -36,7 +36,7 @@
     
     <p><%= post.description %></p>
         <% if post.created_at != post.updated_at %>
-    <small><p><span class="quiet">by</span> <%= link_to post.user.username, user_path(post.user) %> at <%= display_datetime(post.created_at) %><i>(Last edit by <%= login_name %> at <%= post.updated_at%>)</i></p></small>
+    <small><p><span class="quiet">by</span> <%= link_to post.user.username, user_path(post.user.id) %> at <%= display_datetime(post.created_at) %><i>(Last edit by <%= post.user.username %> at <%= post.updated_at%>)</i></p></small>
     <small>
     <% else %>
      <small><p><span class="quiet">by</span> <%= link_to post.user.username, user_path(post.user) %> at <%= display_datetime(post.created_at) %></p></small>

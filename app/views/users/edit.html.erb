@@ -3,7 +3,7 @@
 <%= render 'shared/errors', obj: @user %>
 <h5>Update or enter your password to save changed</h5>
 <div class = "well">
-<%= form_for @user do |f| %>
+<%= form_for @user, as: :user, url: user_path(@user.id), method: :patch do |f| %>
 	<div class = "control-group">
 		<%= f.label :password %>
 		<%= f.password_field :password %>

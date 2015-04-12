@@ -9,11 +9,11 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		
+		@user = User.find_by_id(params[:id])
 	end
 	
 	def edit
-		
+		@user = User.find_by_id(params[:id])
 	end	
 	
 	def create
@@ -27,6 +27,7 @@ class UsersController < ApplicationController
 	end
 
 	def update
+		@user = User.find_by_id(params[:id])
 		if @user.update(user_params) 
 			flash[:notice] = "Your profile was updated."
       		redirect_to user_path
@@ -46,7 +47,7 @@ private
   	end
 
 	def require_creator
-    	access_denied unless logged_in? && current_user.id == @user.id
+    	access_denied unless logged_in? && current_user.id.to_s == params[:id]
   	end
 
 
